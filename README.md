@@ -62,6 +62,11 @@ Senaryolar `scripts\tests\senaryolar.json` içinde; rapor `tests\eval-sonuclari\
 - **Kul AI Bulut:** müşteri API anahtarı girmesin; lisans kodu + sunucu vekili. API anahtarı asla eklentiye gömülmez.
 - İmzalı kurulum paketi (MSI), Civil 3D'nin ortak çekirdeğe taşınması.
 
+## Katkıda bulunanlar
+
+- **Batuhan Kul** ([@batuhankul61-hub](https://github.com/batuhankul61-hub)): proje sahibi
+- **Efekan Kul** ([@Tikky1](https://github.com/Tikky1)): geliştirme desteği
+
 ## Lisans
 
 [MIT](LICENSE). NETCAD, Netcad Yazılım A.Ş.'nin ürünüdür; bu proje NETCAD'in kendi dosyalarını içermez.
