@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Claude sağlayıcısı (resmi Anthropic SDK). Çekirdek onu çalışma anında KulAI.Claude.dll'den yükler. -->
+  <PropertyGroup>
+    <AssemblyName>KulAI.Claude</AssemblyName>
+    <RootNamespace>KulAI.Claude</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Anthropic" Version="12.55.0" />
+    <ProjectReference Include="..\KulAI.Core\KulAI.Core.csproj" Private="false" />
+  </ItemGroup>
+</Project>

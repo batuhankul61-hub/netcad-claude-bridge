@@ -1,0 +1,9 @@
+# Koordinat sistemi arama (Netcad.Epsg veritabanı) ve dönüşüm (NETCAD projeksiyon motoru).
+newproject
+tool find_coordinate_system {"query":"TM30","limit":10}
+tool find_coordinate_system {"query":"ED50 TM","limit":12}
+tool find_coordinate_system {"query":"4326"}
+tool transform_coordinates {"from_epsg":5254,"to_epsg":4326,"points":[[452300,4512800]]}
+tool transform_coordinates {"from_epsg":2320,"to_epsg":5254,"points":[[452300,4512800,815.5]]}
+tool create_text {"position":[452310,4512810],"text":"KONUM TESTI","height":2,"layer":"YAZI"}
+tool find_objects {"types":["text"]}

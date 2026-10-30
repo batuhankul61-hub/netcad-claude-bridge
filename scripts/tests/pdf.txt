@@ -1,0 +1,9 @@
+# PDF çıktı aracı: deneme projesinde nokta, parsel, açılı yazı ve daire; çıktı dev-inbox'a.
+newproject
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.ncn","layer":"OLCUM"}
+tool create_polyline {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"closed":true,"name":"101","layer":"PARSEL"}
+tool create_text {"position":[452310,4512825],"text":"101 Ada 5 Parsel Şahin","height":2,"angle":15,"layer":"YAZI"}
+tool create_circle {"center":[452380,4512830],"radius":6,"layer":"DENEME"}
+tool export_pdf {"path":"F:\\Projeler\\NetcadAI\\dev-inbox\\cikti-500.pdf","scale":500,"title":"Deneme Paftası","subtitle":"Kul AI Asistan"}
+tool zoom_extents {}
+tool export_pdf {"path":"F:\\Projeler\\NetcadAI\\dev-inbox\\cikti-ekran.pdf","area":"view","layers":["PARSEL","YAZI"]}

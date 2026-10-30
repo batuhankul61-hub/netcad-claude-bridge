@@ -1,0 +1,6 @@
+# Ekran görüntüsü ve PDF araçları (görüntüler dev-inbox'a kaydedilir).
+newproject
+tool create_circle {"center":[452320,4512820],"radius":15,"layer":"DENEME"}
+tool zoom_extents {}
+tool capture_view {}
+tool read_pdf {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\koordinat-listesi.pdf"}

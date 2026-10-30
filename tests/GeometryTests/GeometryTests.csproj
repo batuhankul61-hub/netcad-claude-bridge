@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- ParcelDivider dogruluk testi (NETCAD gerekmez). Calistirma: dotnet run, proje klasoru tests\GeometryTests -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Compile Include="..\..\src\KulAI.Core\Geometry\ParcelDivider.cs" Link="ParcelDivider.cs" />
+  </ItemGroup>
+</Project>

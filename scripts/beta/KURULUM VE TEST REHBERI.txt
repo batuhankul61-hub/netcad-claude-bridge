@@ -1,0 +1,114 @@
+KUL AI ASİSTAN (NETCAD) — BETA TEST SÜRÜMÜ
+===========================================
+
+Kul AI Asistan, NETCAD'in içinde çalışan bir yapay zeka asistanıdır. Ne istediğinizi
+Türkçe yazarsınız (ör. "masaüstündeki olcum.ncn dosyasını aç"), asistan işi projenizde kendisi yapar.
+
+Bu bir TEST sürümüdür. Hatalar olabilir. Amacımız sizin denemelerinizle ürünü geliştirmek.
+Lütfen önemli projelerinizde değil, yeni açtığınız bir deneme projesinde kullanın.
+
+
+GEREKSİNİMLER
+-------------
+- NETCAD 8.5 (Windows)
+- İnternet bağlantısı
+- Ücretsiz bir Google hesabı (yapay zeka anahtarı için)
+
+
+1) KURULUM (2 dakika)
+---------------------
+1. NETCAD'i kapatın.
+2. Zip dosyasına sağ tıklayıp "Tümünü ayıkla" deyin ve bir klasöre çıkartın.
+   (Zip'in içinden doğrudan çalıştırmayın.)
+3. Çıkan klasördeki "Kur.bat" dosyasına çift tıklayın.
+   - Windows "Bilgisayarınız korundu" derse: "Ek bilgi" > "Yine de çalıştır".
+   - Kurulum NETCAD klasörünü kendisi bulur (ör. C:\NetCAD853). Bulamazsa size sorar.
+   - "Yazma izni yok" derse: Kur.bat'a sağ tıklayıp "Yönetici olarak çalıştır" deyin.
+4. "Kuruldu" yazısını görünce Enter'a basıp pencereyi kapatın.
+
+
+2) İLK AÇILIŞ
+-------------
+1. NETCAD'i açın. Ekranın SAĞ KENARINDA "Kul AI" yazan bir sekme belirir.
+   Panel kapalıysa bu sekmenin üzerine gelin ya da tıklayın; panel açılır.
+   (Paneli raptiye simgesiyle sabitleyebilirsiniz.)
+2. Paneldeki "Ayarlar" düğmesine basın:
+   a. "Google Gemini (önerilen)" seçili olsun.
+   b. Penceredeki aistudio.google.com bağlantısına tıklayın, Google hesabınızla girin.
+   c. "Create API key" deyin, oluşan anahtarı kopyalayın.
+   d. Ayarlar penceresindeki "API anahtarı" kutusuna yapıştırın ve "Kaydet" deyin.
+
+   Anahtarınız sadece sizin bilgisayarınızda, şifreli olarak saklanır. Kimseyle paylaşmayın.
+
+
+3) KULLANIM
+-----------
+- Paneldeki alt kutuya ne istediğinizi yazın, Enter'a basın (Shift+Enter yeni satır).
+- Asistanın yaptığı her işlemi NETCAD'de Geri Al (Ctrl+Z) ile geri alabilirsiniz.
+- Silme ve çok sayıda nesneyi değiştiren işlemlerden önce asistan "Onayla / İptal" diye sorar.
+- Dosya ekleme: Excel, CSV, NCN veya PDF dosyasını panele sürükleyip bırakabilirsiniz.
+  Resim (ör. ekran alıntısı) sürükleyebilir ya da Ctrl+V ile yapıştırabilirsiniz.
+- "Yeni sohbet" konuşmayı sıfırlar.
+
+Koordinatlar: harita mühendisliğindeki gibi Y = sağa, X = yukarı yazabilirsiniz.
+Ör. "Y=452300, X=4512800 noktasına P1 adlı nokta koy".
+
+
+4) LÜTFEN ŞUNLARI DENEYİN
+-------------------------
+Kendi kelimelerinizle, günlük işinizde nasıl istiyorsanız öyle yazın. Örnekler:
+
+  - "Projede hangi katmanlar var?"
+  - "Tüm katmanları kapat, sadece 0 katmanı açık kalsın"
+  - "Masaüstündeki noktalar.ncn dosyasını aç" (ya da .xlsx, .csv, .txt)
+  - "Bu PDF'teki koordinatları çiz ve parsel olarak birleştir" (PDF'i panele sürükleyin)
+  - "PARSEL katmanındaki 101 nolu parseli 3 eşit parçaya ifraz et"
+  - "101 parselinden 500 metrekarelik bir parça ayır"
+  - "Parsellerin adını ve alanını gösteren bir tablo çiz"
+  - "ED50 TM30 koordinatı Y=452300, X=4512800 olan noktanın ITRF96 karşılığı nedir?"
+  - "Ekrandaki çizime bak, bir sorun görüyor musun?"
+  - "Şunları PDF'e çevir" / "1/500 ölçekli A3 çıktı al" / "sadece ekrandakini PDF yap"
+    (PDF Masaüstüne kaydedilir; semboller ve taramalar bu sürümde PDF'e girmez)
+  - "Bundan sonra yazı yüksekliğini hep 1.5 kullan, bunu hatırla"
+  - "Bu katmandaki yazılar çok büyük, küçült"
+  - "Cephe yaz komutu nerede?" (NETCAD'in kendi komutlarının menüdeki yerini söyler)
+  - "Binanın cephelerini yaz" (kenar uzunluklarını kenarlara yazar)
+  - "Kutur bağla komutunu çalıştır" (NETCAD'in kendi komutunu başlatır; seçimleri siz yaparsınız)
+
+Asistanın yapamadığı bir şeyi istemekten çekinmeyin. Hangi özelliklerin eksik olduğunu
+bilmemiz çok değerli.
+
+
+5) BİLİNEN SINIRLAMALAR
+-----------------------
+- Ücretsiz Gemini anahtarının günlük bir kullanım sınırı vardır. Bir model dolarsa asistan
+  kendiliğinden sıradaki modele geçer ve bunu panelde yazar.
+- Koordinat dönüşümünde (ED50 → ITRF96 gibi) sonucu bildiğiniz bir kontrol noktasıyla
+  mutlaka doğrulayın.
+- Asistan bazen yanlış koordinat ya da ölçü seçebilir. Sonucu kontrol edin, gerekirse
+  Geri Al ile geri alıp daha ayrıntılı tarif edin.
+- Asistan NETCAD'in üst menüsünde (şeritte) görünmez; yalnızca sağ kenardaki paneldedir.
+- Yerel model (Ollama) resim ve PDF göremez; bunlar için Ayarlar'dan Google Gemini'yi seçin.
+
+
+6) GERİ BİLDİRİM GÖNDERME
+-------------------------
+Her deneme için bize şunları yazın:
+  1. Ne yazdınız?
+  2. Ne oldu? (Mümkünse ekran görüntüsü)
+  3. Ne olmasını beklerdiniz?
+  4. Genel izleniminiz: işinize yarar mı, neyi eksik buldunuz?
+
+Konuşma kayıtları: Dosya Gezgini'nin adres çubuğuna şunu yazıp Enter'a basın:
+    %APPDATA%\KulAI.Netcad\logs
+Açılan klasördeki dosyaları gönderin. Bu kayıtlar hatayı bulmamızı çok kolaylaştırır.
+İçlerinde yazdıklarınız ve asistanın projede yaptığı işlemler (katman/nokta adları,
+koordinatlar) bulunur; API anahtarınız bulunmaz. Göndermeden önce Not Defteri ile
+içine göz atabilirsiniz.
+
+
+7) KALDIRMA
+-----------
+NETCAD'i kapatıp "Kaldir.bat" dosyasına çift tıklayın.
+
+Teşekkürler!

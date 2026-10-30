@@ -1,0 +1,15 @@
+# Yazı boyu: otomatik yükseklik, edit_texts ve komut arama (deneme projesinde).
+newproject
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.ncn","layer":"OLCUM"}
+tool create_text {"position":[452310,4512825],"text":"OTOMATIK","layer":"YAZI"}
+tool create_text {"position":[452330,4512840],"text":"BUYUK_1","height":2.5,"layer":"ETIKET"}
+tool create_text {"position":[452360,4512860],"text":"BUYUK_2","height":2.5,"layer":"ETIKET"}
+tool find_objects {"types":["text"]}
+tool edit_texts {"layer":"ETIKET","factor":0.2}
+tool find_objects {"types":["text"]}
+tool edit_texts {"text_pattern":"BUYUK_*","auto":true,"angle":30}
+tool find_objects {"types":["text"]}
+tool zoom_extents {}
+tool capture_view {}
+tool find_netcad_command {"query":"cephe yazdırma komutu nerde"}
+tool find_netcad_command {"query":"kütür bağla"}

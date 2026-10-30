@@ -1,0 +1,16 @@
+# A paketi araç testleri: yeni boş "KulAI-Test" projesinde.
+newproject
+tool preview_table_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.csv"}
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.csv","skip_rows":1,"east_column":1,"north_column":2,"z_column":3,"name_column":0,"code_column":4,"layer":"OLCUM_CSV"}
+tool preview_table_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.xlsx"}
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.xlsx","skip_rows":1,"east_column":1,"north_column":2,"z_column":3,"name_column":0,"code_column":4,"layer":"OLCUM_XLSX"}
+tool find_objects {"layer":"OLCUM_CSV","name_pattern":"P1*","limit":5}
+tool create_polyline {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"closed":true,"name":"101","layer":"PARSEL"}
+tool find_objects {"types":["area","polyline"],"include_vertices":true}
+tool divide_parcel {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"parts":3,"reference_edge":0,"name_prefix":"101/"}
+tool divide_parcel {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"areas":[500],"reference_edge":0,"cut":"parallel","name_prefix":"101-B/","layer":"IFRAZ_B"}
+tool find_objects {"layer":"IFRAZ"}
+tool create_table {"top_left":[452360,4512850],"title":"KOORDİNAT TABLOSU","columns":["Nokta","Y","X","Z"],"rows":[["P1","452345.986","4512878.413","815.966"],["P2","452306.271","4512832.979","816.057"]],"text_height":1.2}
+tool delete_objects {"layer":"IFRAZ_B"}
+tool find_objects {"layer":"IFRAZ_B"}
+tool zoom_extents {}

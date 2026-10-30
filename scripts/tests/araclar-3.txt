@@ -1,0 +1,11 @@
+# Düzeltme testleri: sıra numarası, kot, yazı konumu, sıra numarasıyla ifraz, silme.
+newproject
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.csv","skip_rows":1,"east_column":1,"north_column":2,"z_column":3,"name_column":0,"code_column":4,"layer":"OLCUM"}
+tool find_objects {"layer":"OLCUM","name_pattern":"P1","limit":3}
+tool create_polyline {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"closed":true,"name":"101","layer":"PARSEL"}
+tool find_objects {"layer":"PARSEL"}
+tool divide_parcel {"object_index":25,"parts":2,"name_prefix":"101/"}
+tool find_objects {"layer":"IFRAZ"}
+tool delete_objects {"layer":"IFRAZ"}
+tool find_objects {"layer":"IFRAZ"}
+tool find_objects {"layer":"PARSEL"}

@@ -1,0 +1,158 @@
+[
+  {
+    "name": "katman-kapat",
+    "setup": [
+      "tool create_layer {\"name\":\"BINA\"}",
+      "tool create_layer {\"name\":\"YOL\"}",
+      "tool create_layer {\"name\":\"PARSEL\"}"
+    ],
+    "ask": "tüm katmanları kapat, sadece 0 katmanı açık kalsın",
+    "transcript": ["ARAÇ: set_layers_visibility"],
+    "checks": [
+      { "cmd": "tool list_layers {}", "expect": "\"open\":1[,}]" }
+    ]
+  },
+  {
+    "name": "nokta-aktar-csv",
+    "setup": [],
+    "ask": "F:\\Projeler\\NetcadAI\\tests\\data\\olcum.csv dosyasındaki noktaları OLCUM katmanına aktar. İlk satır başlık.",
+    "transcript": ["ARAÇ: (preview_table_file|import_points_from_file)", "ARAÇ: import_points_from_file"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"OLCUM\",\"types\":[\"point\"],\"limit\":1}", "expect": "\"count\":25[,}]" },
+      { "cmd": "tool find_objects {\"layer\":\"OLCUM\",\"name_pattern\":\"P1\",\"limit\":1}", "expect": "4512\\d{3}" }
+    ]
+  },
+  {
+    "name": "nokta-aktar-excel",
+    "setup": [],
+    "ask": "Bu excel'deki koordinatları çiz: F:\\Projeler\\NetcadAI\\tests\\data\\olcum.xlsx (NOKTALAR katmanı)",
+    "transcript": ["ARAÇ: import_points_from_file"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"NOKTALAR\",\"types\":[\"point\"],\"limit\":1}", "expect": "\"count\":25[,}]" }
+    ]
+  },
+  {
+    "name": "nokta-aktar-ncn",
+    "setup": [],
+    "ask": "F:\\Projeler\\NetcadAI\\tests\\data\\olcum.ncn dosyasını aç",
+    "transcript": ["ARAÇ: import_points_from_file"],
+    "checks": [
+      { "cmd": "tool find_objects {\"types\":[\"point\"],\"name_pattern\":\"P1\",\"limit\":1}", "expect": "\"coord\":\\[452345\\.986,4512878\\.413\\],\"z\":815\\.966" }
+    ]
+  },
+  {
+    "name": "ifraz-esit",
+    "setup": [
+      "tool create_polyline {\"points\":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],\"closed\":true,\"name\":\"101\",\"layer\":\"PARSEL\"}"
+    ],
+    "ask": "PARSEL katmanındaki 101 nolu parseli 3 eşit parçaya ifraz et",
+    "transcript": ["ARAÇ: divide_parcel"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"IFRAZ\",\"types\":[\"area\",\"polyline\"]}", "expect": "\"count\":3[,}]" },
+      { "cmd": "tool find_objects {\"layer\":\"IFRAZ\",\"types\":[\"area\",\"polyline\"]}", "expect": "\"total_area\":1887\\.0[01]" }
+    ]
+  },
+  {
+    "name": "ifraz-alan",
+    "setup": [
+      "tool create_polyline {\"points\":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],\"closed\":true,\"name\":\"101\",\"layer\":\"PARSEL\"}"
+    ],
+    "ask": "101 parselinden 500 metrekarelik bir parça ayır, kalanı ayrı parsel olsun",
+    "transcript": ["ARAÇ: divide_parcel", "500"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"IFRAZ\"}", "expect": "\"area\":500(\\.0+)?[,}]" }
+    ]
+  },
+  {
+    "name": "alan-tablosu",
+    "setup": [
+      "tool create_polyline {\"points\":[[452300,4512800],[452340,4512800],[452340,4512830],[452300,4512830]],\"closed\":true,\"name\":\"A\",\"layer\":\"PARSEL\"}",
+      "tool create_polyline {\"points\":[[452350,4512800],[452370,4512800],[452370,4512850],[452350,4512850]],\"closed\":true,\"name\":\"B\",\"layer\":\"PARSEL\"}"
+    ],
+    "ask": "PARSEL katmanındaki parsellerin adını ve alanını gösteren bir tablo çiz, sağ tarafa koy",
+    "transcript": ["ARAÇ: find_objects", "ARAÇ: create_table", "1200", "1000"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"TABLO\",\"types\":[\"text\"],\"limit\":40}", "expect": "1200" }
+    ]
+  },
+  {
+    "name": "koordinat-donusumu",
+    "setup": [],
+    "ask": "ED50 TM30 koordinatı Y=452300, X=4512800 olan noktanın ITRF96 (TUREF) TM30 koordinatı nedir?",
+    "transcript": ["ARAÇ: find_coordinate_system", "ARAÇ: transform_coordinates", "Y\\s*=\\s*452\\d{3}", "X\\s*=\\s*4512\\d{3}"],
+    "checks": []
+  },
+  {
+    "name": "pdf-koordinat",
+    "setup": [],
+    "ask": "F:\\Projeler\\NetcadAI\\tests\\data\\koordinat-listesi.pdf dosyasındaki köşe noktalarını çiz ve parsel sınırı olarak kapalı alan yap (PARSEL katmanı). Değerleri teyit etmene gerek yok, doğrudan çiz.",
+    "transcript": ["ARAÇ: read_pdf", "ARAÇ: create_polyline"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"PARSEL\",\"types\":[\"area\",\"polyline\"]}", "expect": "\"area\":1887\\.0[01]" }
+    ]
+  },
+  {
+    "name": "ekrana-bak",
+    "setup": [
+      "tool create_circle {\"center\":[452320,4512820],\"radius\":15,\"layer\":\"DENEME\"}",
+      "tool zoom_extents {}"
+    ],
+    "ask": "ekran görüntüsüne bakarak söyle: çizim alanında hangi şekil var? (nesne listesine bakma, sadece görüntüye bak)",
+    "transcript": ["ARAÇ: capture_view", "SONUÇ: \\{\"captured\":true", "(?i)(daire|çember)"],
+    "checks": []
+  },
+  {
+    "name": "pdf-cikti",
+    "setup": [
+      "tool import_points_from_file {\"path\":\"F:\\\\Projeler\\\\NetcadAI\\\\tests\\\\data\\\\olcum.ncn\",\"layer\":\"OLCUM\"}",
+      "tool create_polyline {\"points\":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],\"closed\":true,\"name\":\"101\",\"layer\":\"PARSEL\"}",
+      "tool create_text {\"position\":[452310,4512825],\"text\":\"101 Ada 5 Parsel\",\"height\":2,\"layer\":\"YAZI\"}"
+    ],
+    "ask": "şunları pdfe çevirebilir misin? 1/500 ölçekli olsun, F:\\Projeler\\NetcadAI\\dev-inbox\\eval-cikti.pdf olarak kaydet",
+    "transcript": ["ARAÇ: export_pdf", "\"scale\":\"1/500\"", "\"objects\":27"],
+    "checks": []
+  },
+  {
+    "name": "yazilari-kucult",
+    "setup": [
+      "tool create_polyline {\"points\":[[452300,4512800],[452315,4512800],[452315,4512812],[452300,4512812]],\"closed\":true,\"layer\":\"BINA\"}",
+      "tool create_text {\"position\":[452302,4512805],\"text\":\"DIS_DUVAR\",\"height\":2.5,\"layer\":\"CEPHE_ETIKET\"}",
+      "tool create_text {\"position\":[452306,4512808],\"text\":\"BALCONY\",\"height\":2.5,\"layer\":\"CEPHE_ETIKET\"}"
+    ],
+    "ask": "CEPHE_ETIKET katmanındaki yazıların boyutlarına bak, çok büyükler, bunları küçültmen lazım",
+    "transcript": ["ARAÇ: edit_texts"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"CEPHE_ETIKET\",\"types\":[\"text\"]}", "expect": "\"height\":(0\\.\\d+|1\\.0)[,}]" }
+    ]
+  },
+  {
+    "name": "komut-nerede",
+    "setup": [],
+    "ask": "cephe yazdırma komutu nerde",
+    "transcript": ["ARAÇ: find_netcad_command", "(?i)Detaylar", "(?i)Ölçme Araçları"],
+    "checks": []
+  },
+  {
+    "name": "cephe-yaz",
+    "setup": [
+      "tool create_polyline {\"points\":[[452360,4512810],[452372,4512810],[452372,4512822],[452366,4512828],[452360,4512822]],\"closed\":true,\"name\":\"BINA\",\"layer\":\"BINA\"}"
+    ],
+    "ask": "binanın cephelerini yazar mısın",
+    "transcript": ["ARAÇ: write_edge_lengths"],
+    "checks": [
+      { "cmd": "tool find_objects {\"types\":[\"text\"],\"limit\":20}", "expect": "\"text\":\"12\\.00\".*\"text\":\"8\\.49\"" }
+    ]
+  },
+  {
+    "name": "silme-onayi",
+    "setup": [
+      "tool create_line {\"start\":[452300,4512800],\"end\":[452320,4512820],\"layer\":\"GECICI\"}",
+      "tool create_line {\"start\":[452300,4512820],\"end\":[452320,4512800],\"layer\":\"GECICI\"}"
+    ],
+    "ask": "GECICI katmanındaki her şeyi sil",
+    "transcript": ["ONAY", "ARAÇ: delete_objects"],
+    "checks": [
+      { "cmd": "tool find_objects {\"layer\":\"GECICI\"}", "expect": "\"count\":0[,}]" }
+    ]
+  }
+]

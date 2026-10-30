@@ -1,0 +1,782 @@
+[
+ {
+  "name": "get_drawing_info",
+  "description": "Açık projenin özetini verir: dosya adı, çizim sınırları (min/max koordinat), katman sayısı. Mevcut çizime göre konum seçmeden önce çağır.",
+  "input_schema": {
+   "type": "object",
+   "properties": {}
+  }
+ },
+ {
+  "name": "list_layers",
+  "description": "Projedeki katmanları listeler: ad, açık/kapalı, kilitli mi. Katmanlarla ilgili her işten önce çağır.",
+  "input_schema": {
+   "type": "object",
+   "properties": {}
+  }
+ },
+ {
+  "name": "set_layers_visibility",
+  "description": "Katmanları açar ya da kapatır. 'layers' ile ad listesi ya da joker kalıp ('*' tümü, 'YOL*' YOL ile başlayanlar) ver; 'except' ile hariç tutulacakları belirt (ör. tümünü kapatıp birini açık bırakmak).",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "layers": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Katman adları ya da kalıplar, ör. * (tümü) veya BINA, YOL*"
+    },
+    "visible": {
+     "type": "boolean",
+     "description": "true = aç, false = kapat"
+    },
+    "except": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Dokunulmayacak katmanlar"
+    }
+   },
+   "required": [
+    "layers",
+    "visible"
+   ]
+  }
+ },
+ {
+  "name": "create_layer",
+  "description": "Katman oluşturur (zaten varsa dokunmaz).",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "color": {
+     "type": "string",
+     "description": "kırmızı, sarı, yeşil, mavi, camgöbeği, eflatun, beyaz, gri, zeytin"
+    }
+   },
+   "required": [
+    "name"
+   ]
+  }
+ },
+ {
+  "name": "create_line",
+  "description": "İki nokta arasında çizgi çizer.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "start": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "[east, north] = [harita Y (sağa), harita X (yukarı)]"
+    },
+    "end": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "[east, north] = [harita Y (sağa), harita X (yukarı)]"
+    },
+    "layer": {
+     "type": "string",
+     "description": "Katman adı (yoksa oluşturulur)"
+    }
+   },
+   "required": [
+    "start",
+    "end"
+   ]
+  }
+ },
+ {
+  "name": "create_polyline",
+  "description": "Noktalardan çoklu doğru (açık) ya da alan/poligon (kapalı) çizer; uzunluk ve kapalıysa alanı raporlar. Parsel, bina, yol kenarı vb. için kullan.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "points": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      }
+     },
+     "description": "[[east, north], ...] = [[harita Y, harita X], ...], en az 2 nokta"
+    },
+    "closed": {
+     "type": "boolean",
+     "description": "Kapalı alan mı (varsayılan false)"
+    },
+    "name": {
+     "type": "string",
+     "description": "İsteğe bağlı ad (ör. parsel no)"
+    },
+    "layer": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "points"
+   ]
+  }
+ },
+ {
+  "name": "create_points",
+  "description": "NETCAD noktaları oluşturur (aplikasyon/ölçüm noktası). Her nokta kot (z), nokta adı ve kod taşıyabilir.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "points": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "east": {
+        "type": "number",
+        "description": "Sağa koordinat = harita Y"
+       },
+       "north": {
+        "type": "number",
+        "description": "Yukarı koordinat = harita X"
+       },
+       "z": {
+        "type": "number",
+        "description": "Kot"
+       },
+       "name": {
+        "type": "string",
+        "description": "Nokta adı/numarası"
+       },
+       "code": {
+        "type": "string",
+        "description": "Nokta kodu (ör. AGAC, BORDUR)"
+       }
+      },
+      "required": [
+       "east",
+       "north"
+      ]
+     }
+    },
+    "layer": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "points"
+   ]
+  }
+ },
+ {
+  "name": "create_text",
+  "description": "Belirtilen noktaya yazı yazar (ada no, etiket, açıklama). Yüksekliği genelde VERME: çizimin büyüklüğüne göre otomatik seçilir. Kullanıcı ölçü verirse ya da çizimdeki diğer yazılara uydurman gerekirse ver.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "position": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "[east, north] = [harita Y (sağa), harita X (yukarı)]"
+    },
+    "text": {
+     "type": "string"
+    },
+    "height": {
+     "type": "number",
+     "description": "Yazı yüksekliği, metre (verilmezse çizim boyutuna göre otomatik)"
+    },
+    "angle": {
+     "type": "number",
+     "description": "Açı, derece (varsayılan 0)"
+    },
+    "layer": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "position",
+    "text"
+   ]
+  }
+ },
+ {
+  "name": "create_circle",
+  "description": "Merkez ve yarıçap ile daire çizer.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "center": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "[east, north] = [harita Y (sağa), harita X (yukarı)]"
+    },
+    "radius": {
+     "type": "number"
+    },
+    "layer": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "center",
+    "radius"
+   ]
+  }
+ },
+ {
+  "name": "zoom_extents",
+  "description": "Görünümü çizimdeki tüm nesneleri gösterecek şekilde yakınlaştırır (Limit Bul).",
+  "input_schema": {
+   "type": "object",
+   "properties": {}
+  }
+ },
+ {
+  "name": "find_objects",
+  "description": "Projedeki nesneleri katmana ve/veya türe göre bulur; her birinin sıra numarasını (index), alanını, uzunluğunu, nokta adı/kodu/kotunu, istenirse köşe koordinatlarını [east, north] verir; toplam alan ve uzunluğu hesaplar. 'Şu katmandaki alanların toplamı', 'P ile başlayan noktalar' gibi sorular için kullan.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "layer": {
+     "type": "string",
+     "description": "Katman adı ya da kalıp (* joker), ör. BINA*"
+    },
+    "types": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "point, line, polyline, area, text, circle, arc, block"
+    },
+    "name_pattern": {
+     "type": "string",
+     "description": "Nokta/nesne adı kalıbı, ör. P*"
+    },
+    "include_vertices": {
+     "type": "boolean",
+     "description": "Çizgi/alanların köşe koordinatlarını da ver (varsayılan false)"
+    },
+    "limit": {
+     "type": "integer",
+     "description": "En fazla kaç nesne listelensin (varsayılan 100)"
+    }
+   }
+  }
+ },
+ {
+  "name": "select_objects",
+  "description": "Kullanıcıdan NETCAD ekranında nesne seçmesini ister (kullanıcı tıklayıp Enter'a basar) ve seçilenlerin bilgisini find_objects ile aynı biçimde döndürür. Kullanıcı 'seçtiğim', 'şu alan', 'bunu' gibi ifadelerle bir nesneyi kastettiğinde kullan.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "NETCAD durum çubuğunda gösterilecek mesaj, ör. 'Bölünecek parseli seçin'"
+    },
+    "include_vertices": {
+     "type": "boolean"
+    }
+   }
+  }
+ },
+ {
+  "name": "delete_objects",
+  "description": "Nesneleri siler: sıra numaralarıyla (find_objects / select_objects sonucundaki index) ya da bir katmandaki tüm nesneler. Her zaman kullanıcı onayı istenir. Geri almak için Ctrl+Z.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "indices": {
+     "type": "array",
+     "items": {
+      "type": "integer"
+     }
+    },
+    "layer": {
+     "type": "string",
+     "description": "Bu katmandaki (kalıp olabilir) tüm nesneleri sil"
+    }
+   }
+  }
+ },
+ {
+  "name": "preview_table_file",
+  "description": "Bir koordinat listesi dosyasının (xlsx, csv, txt, NETCAD .ncn) ilk satırlarını gösterir. Noktaları aktarmadan ÖNCE çağır: sütunlardan hangisinin harita Y'si (sağa, genelde 6 haneli), harita X'i (yukarı, genelde 7 haneli), kot, nokta adı ve kod olduğunu buna bakarak belirle. Tam yol verilmezse Masaüstü, Belgeler ve İndirilenler'de aranır.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "path": {
+     "type": "string",
+     "description": "Dosya yolu ya da adı, ör. olcum.xlsx"
+    },
+    "sheet": {
+     "type": "string",
+     "description": "Excel sayfa adı (varsayılan ilk sayfa)"
+    }
+   },
+   "required": [
+    "path"
+   ]
+  }
+ },
+ {
+  "name": "import_points_from_file",
+  "description": "Koordinat listesi dosyasındaki noktaları NETCAD'e aktarır. Önce preview_table_file ile sütunları belirle. Sütun numaraları 0'dan başlar. east_column = harita Y (sağa), north_column = harita X (yukarı). NETCAD nokta dosyası (.ncn: 'Ad Y X Z [Kod]') için sütunları vermene gerek yok; standart sıra kullanılır.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "path": {
+     "type": "string"
+    },
+    "sheet": {
+     "type": "string"
+    },
+    "skip_rows": {
+     "type": "integer",
+     "description": "Baştan atlanacak satır sayısı (başlık satırı varsa 1)"
+    },
+    "east_column": {
+     "type": "integer",
+     "description": "Harita Y (sağa) sütunu"
+    },
+    "north_column": {
+     "type": "integer",
+     "description": "Harita X (yukarı) sütunu"
+    },
+    "z_column": {
+     "type": "integer",
+     "description": "Kot sütunu (yoksa verme)"
+    },
+    "name_column": {
+     "type": "integer",
+     "description": "Nokta adı/no sütunu (yoksa verme)"
+    },
+    "code_column": {
+     "type": "integer",
+     "description": "Nokta kodu sütunu (yoksa verme)"
+    },
+    "layer": {
+     "type": "string",
+     "description": "Varsayılan 'NOKTALAR'"
+    }
+   },
+   "required": [
+    "path"
+   ]
+  }
+ },
+ {
+  "name": "divide_parcel",
+  "description": "Parsel ifrazı: kapalı bir alanı paralel kesim çizgileriyle eşit parçalara (parts) ya da belirli alanlara (areas, m²; kalan son parça olur) böler, parçaları kapalı alan olarak çizer ve alanlarını raporlar. Parsel, find_objects / select_objects sonucundaki 'index' ile ya da köşe koordinatlarıyla verilir. Kesim çizgileri referans kenara dik (varsayılan; her parça bu kenardan cephe alır) ya da paralel olur. Kenar k, k. köşeden k+1. köşeye gider.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "object_index": {
+     "type": "integer",
+     "description": "Bölünecek alanın sıra numarası"
+    },
+    "points": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      }
+     },
+     "description": "object_index yoksa köşeler [[east, north], ...]"
+    },
+    "parts": {
+     "type": "integer",
+     "description": "Eşit parça sayısı"
+    },
+    "areas": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "İlk parçaların alanları (m²)"
+    },
+    "reference_edge": {
+     "type": "integer",
+     "description": "Referans kenar (0'dan başlar, varsayılan 0)"
+    },
+    "cut": {
+     "type": "string",
+     "enum": [
+      "perpendicular",
+      "parallel"
+     ],
+     "description": "Kesimler referans kenara dik mi paralel mi"
+    },
+    "from_opposite_side": {
+     "type": "boolean",
+     "description": "Bölmeye öbür uçtan başla"
+    },
+    "name_prefix": {
+     "type": "string",
+     "description": "Parça adları için önek, ör. 101/ → 101/1, 101/2"
+    },
+    "layer": {
+     "type": "string",
+     "description": "Varsayılan IFRAZ"
+    }
+   }
+  }
+ },
+ {
+  "name": "create_table",
+  "description": "Çizime çizgili bir tablo çizer (koordinat tablosu, alan tablosu, aplikasyon tablosu vb.). İçeriği sen hazırla: ör. find_objects sonucundaki noktalardan Nokta/Y/X/Z satırları. Konumu mevcut çizimin yanında boş bir yere koy.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "top_left": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "description": "Tablonun sol üst köşesi [east, north]"
+    },
+    "title": {
+     "type": "string",
+     "description": "İsteğe bağlı başlık"
+    },
+    "columns": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Sütun başlıkları"
+    },
+    "rows": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "description": "Satırlar (metin olarak)"
+    },
+    "text_height": {
+     "type": "number",
+     "description": "Yazı yüksekliği, m (verilmezse çizim boyutuna göre otomatik)"
+    },
+    "layer": {
+     "type": "string",
+     "description": "Varsayılan TABLO"
+    }
+   },
+   "required": [
+    "top_left",
+    "columns",
+    "rows"
+   ]
+  }
+ },
+ {
+  "name": "find_coordinate_system",
+  "description": "NETCAD'in desteklediği koordinat sistemlerinde arama yapar ve EPSG kodlarını verir. transform_coordinates'ten önce kodu buradan bul; EPSG kodunu ezberden yazma. Ör. arama: 'TM30', 'ED50', 'TUREF', 'UTM 35', 'WGS 84'.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "query": {
+     "type": "string",
+     "description": "Ad parçaları (boşlukla ayrılmış, hepsi geçmeli) ya da EPSG kodu"
+    },
+    "limit": {
+     "type": "integer",
+     "description": "Varsayılan 25"
+    }
+   },
+   "required": [
+    "query"
+   ]
+  }
+ },
+ {
+  "name": "transform_coordinates",
+  "description": "Noktaları bir koordinat sisteminden diğerine dönüştürür (ör. ED50 TM30 → ITRF96/TUREF TM30), NETCAD'in kendi projeksiyon motoru ve parametreleriyle. EPSG kodlarını find_coordinate_system ile bul. Noktalar [east, north] ya da [east, north, z] (harita Y, harita X, kot); coğrafi sistemde (ör. 4326) [boylam, enlem] derece. Sonucu kullanıcıya verirken bilinen bir kontrol noktasıyla doğrulamasını öner.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "from_epsg": {
+     "type": "integer"
+    },
+    "to_epsg": {
+     "type": "integer"
+    },
+    "points": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      }
+     }
+    }
+   },
+   "required": [
+    "from_epsg",
+    "to_epsg",
+    "points"
+   ]
+  }
+ },
+ {
+  "name": "project_projection",
+  "description": "Açık projenin projeksiyon ayarını okur ya da değiştirir (NETCAD Proje Özellikleri > Projeksiyon). Proje projeksiyonu koordinatların hangi sistemde olduğunu belirler; ikinci projeksiyon yalnızca koordinatların başka sistemde gösterilmesi içindir. Parametresiz çağrı yalnızca okur. EPSG kodlarını find_coordinate_system ile bul. Değiştirmek nesnelerin koordinatlarını dönüştürmez.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "set_epsg": {
+     "type": "integer",
+     "description": "Proje projeksiyonu, ör. 5253 = TUREF / TM27"
+    },
+    "display_epsg": {
+     "type": "integer",
+     "description": "İkinci (gösterim) projeksiyonu, ör. 4326 = WGS 84 coğrafi"
+    }
+   }
+  }
+ },
+ {
+  "name": "capture_view",
+  "description": "NETCAD penceresinin ekran görüntüsünü alıp sana gösterir; ekrandaki görünüm koordinatlarını da verir. Kullanıcı 'ekrandakine bak', 'şu çizimde ne var', 'çizim düzgün mü' dediğinde ya da yaptığın çizimi gözle kontrol etmek istediğinde kullan. Koordinat okumak için görüntüye değil find_objects'e güven.",
+  "input_schema": {
+   "type": "object",
+   "properties": {}
+  }
+ },
+ {
+  "name": "read_pdf",
+  "description": "PDF belgesinin sayfalarını görüntü olarak açıp sana gösterir (tapu, imar durumu, aplikasyon krokisi, koordinat listesi, şartname; taranmış belgeler dahil). Dosya yolu tam yol ya da Masaüstü/Belgeler/İndirilenler'deki dosya adı olabilir. Uzun belgede önce ilk sayfalara bak, gerekirse first_page ile devam et. Okuduğun sayıları kullanıcıya teyit ettirmeden çizime aktarma.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "path": {
+     "type": "string"
+    },
+    "first_page": {
+     "type": "integer",
+     "description": "1'den başlar (varsayılan 1)"
+    },
+    "max_pages": {
+     "type": "integer",
+     "description": "Varsayılan 3, en fazla 6"
+    }
+   },
+   "required": [
+    "path"
+   ]
+  }
+ },
+ {
+  "name": "export_pdf",
+  "description": "Projedeki çizimi ölçekli PDF'e çevirir (çıktı/pafta/kroki). Varsayılan: açık katmanlardaki tüm nesneler, kâğıda sığan en büyük standart ölçek, A4. Belirli katmanlar (layers), nesneler (object_indices, find_objects'ten) ya da yalnızca ekrandaki görünüm (area='view') çıkarılabilir. Ölçek 1/500 için scale=500. PDF Masaüstüne kaydedilir ve açılır. Semboller, bloklar ve taramalar PDF'e girmez; bunu kullanıcıya söyle.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "path": {
+     "type": "string",
+     "description": "Kayıt yolu ya da dosya adı (varsayılan Masaüstü\\<proje>_cikti.pdf)"
+    },
+    "layers": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Yalnızca bu katmanlar (* joker). Verilmezse açık katmanlar."
+    },
+    "object_indices": {
+     "type": "array",
+     "items": {
+      "type": "integer"
+     },
+     "description": "Yalnızca bu nesneler"
+    },
+    "area": {
+     "type": "string",
+     "enum": [
+      "all",
+      "view"
+     ],
+     "description": "all = seçilen nesnelerin tamamı, view = ekranda görünen alan"
+    },
+    "scale": {
+     "type": "number",
+     "description": "Ölçek paydası, ör. 500 = 1/500. Verilmezse otomatik."
+    },
+    "paper": {
+     "type": "string",
+     "enum": [
+      "A4",
+      "A3",
+      "A2",
+      "A1",
+      "A0",
+      "auto"
+     ],
+     "description": "Varsayılan: ölçek verilmişse sığan en küçük kâğıt, yoksa A4"
+    },
+    "orientation": {
+     "type": "string",
+     "enum": [
+      "portrait",
+      "landscape",
+      "auto"
+     ]
+    },
+    "title": {
+     "type": "string",
+     "description": "Başlık bloğundaki başlık (varsayılan proje adı)"
+    },
+    "subtitle": {
+     "type": "string",
+     "description": "Başlığın altındaki açıklama (ada/parsel, mahalle, hazırlayan…)"
+    },
+    "point_names": {
+     "type": "boolean",
+     "description": "Nokta adlarını yaz (varsayılan true)"
+    },
+    "grid": {
+     "type": "boolean",
+     "description": "Koordinat ızgarası (varsayılan true)"
+    },
+    "open": {
+     "type": "boolean",
+     "description": "Kaydettikten sonra aç (varsayılan true)"
+    }
+   }
+  }
+ },
+ {
+  "name": "edit_texts",
+  "description": "Var olan yazıların yüksekliğini ve/veya açısını değiştirir ('yazıları küçült', 'etiketler çok büyük', 'yazı boyunu 0.5 yap'). Yazılar katmana, sıra numarasına ya da metne göre seçilir; hiçbiri verilmezse tüm yazılar. height = yeni yükseklik (m), factor = çarpan (0.2 = beşte biri), auto = çizim boyutuna uygun yükseklik. Önce find_objects ile yazıların şimdiki 'height' değerine bak.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "layer": {
+     "type": "string",
+     "description": "Katman adı ya da kalıp (* joker)"
+    },
+    "object_indices": {
+     "type": "array",
+     "items": {
+      "type": "integer"
+     }
+    },
+    "text_pattern": {
+     "type": "string",
+     "description": "Yazı metni kalıbı (* joker), ör. DIS_DUVAR*"
+    },
+    "height": {
+     "type": "number",
+     "description": "Yeni yükseklik, m"
+    },
+    "factor": {
+     "type": "number",
+     "description": "Yükseklik çarpanı"
+    },
+    "auto": {
+     "type": "boolean",
+     "description": "Çizim boyutuna uygun yüksekliğe getir"
+    },
+    "angle": {
+     "type": "number",
+     "description": "Yeni açı, derece"
+    }
+   }
+  }
+ },
+ {
+  "name": "find_netcad_command",
+  "description": "NETCAD'in kendi komutlarının menüde nerede olduğunu bulur (sekme / grup / komut adı, kısayol). Kullanıcı 'X komutu nerede', 'X'i nasıl yaparım' diye sorduğunda ya da senin araçlarınla yapılamayan bir iş istendiğinde önce bununla ara ve kullanıcıya menü yolunu söyle. Bilgi kullanıcının kurulu NETCAD'inden okunur; burada çıkmayan bir menü yolu uydurma. Arama: Türkçe anahtar kelimeler, ör. 'cephe yaz', 'kesit', 'aplikasyon'.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "query": {
+     "type": "string",
+     "description": "Anahtar kelimeler"
+    },
+    "limit": {
+     "type": "integer",
+     "description": "Varsayılan 10"
+    }
+   },
+   "required": [
+    "query"
+   ]
+  }
+ },
+ {
+  "name": "run_netcad_command",
+  "description": "NETCAD'in kendi bir komutunu, kullanıcı menüden tıklamış gibi başlatır (ör. 'Cephe Yaz', 'Kutur Bağla', 'Etiketleri Üret'). Kendi araçlarınla yapamadığın ama NETCAD'de komutu olan işler için kullan; komut adını önce find_netcad_command ile bul. Çoğu komut etkileşimlidir: başlattıktan sonra kullanıcıya NETCAD'in ekranda ne isteyeceğini (nesne seç, nokta göster, Enter/sağ tık ile bitir) kısaca söyle. Komutun sonucunu sen göremezsin; 'yaptım' deme, 'başlattım' de.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "command": {
+     "type": "string",
+     "description": "find_netcad_command'ın verdiği komut adı, ör. Cephe Yaz"
+    },
+    "menu_path": {
+     "type": "string",
+     "description": "Aynı adlı birden çok komut varsa menü yolu"
+    }
+   },
+   "required": [
+    "command"
+   ]
+  }
+ },
+ {
+  "name": "write_edge_lengths",
+  "description": "Cephe yazar: seçilen çizgi/alanların (parsel, bina) her kenarının uzunluğunu kenara paralel olarak yazar (NETCAD'deki 'Cephe Yaz' işinin otomatik hali). Nesneler sıra numarasıyla (find_objects / select_objects) ya da katmanla verilir. Yazı yüksekliği verilmezse çizime göre otomatik.",
+  "input_schema": {
+   "type": "object",
+   "properties": {
+    "object_indices": {
+     "type": "array",
+     "items": {
+      "type": "integer"
+     }
+    },
+    "layer": {
+     "type": "string",
+     "description": "Bu katmandaki tüm çizgi/alanlar (* joker)"
+    },
+    "text_layer": {
+     "type": "string",
+     "description": "Yazıların katmanı (varsayılan CEPHE)"
+    },
+    "decimals": {
+     "type": "integer",
+     "description": "Ondalık hane (varsayılan 2)"
+    },
+    "height": {
+     "type": "number",
+     "description": "Yazı yüksekliği, m (verilmezse otomatik)"
+    },
+    "min_length": {
+     "type": "number",
+     "description": "Bundan kısa kenarlar yazılmaz, m (varsayılan 0.1)"
+    },
+    "inside": {
+     "type": "boolean",
+     "description": "Kapalı alanlarda yazıyı içe koy (varsayılan dışa)"
+    }
+   }
+  }
+ }
+]
