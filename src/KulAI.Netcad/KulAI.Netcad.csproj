@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    NETCAD 8.5 modülü. NETCAD modülleri MODUL\<Ad>\<Ad>.NETMODUL.dll olarak durur. Çekirdek (KulAI.Core),
+    Claude bileşeni ve bağımlılıkları aynı klasöre kopyalanır; MainModule onları AssemblyResolve ile bulur.
+  -->
+  <PropertyGroup>
+    <AssemblyName>KulAI.NETMODUL</AssemblyName>
+    <RootNamespace>KulAI.Netcad</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!-- NETCAD API: NETCAD içinde zaten yüklü, kopyalanmaz -->
+  <ItemGroup>
+    <Reference Include="Netcad.Interop"><HintPath>$(NetcadTools)\Netcad.Interop.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Netcad.Core"><HintPath>$(NetcadTools)\Netcad.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Netcad.Interop.Topology"><HintPath>$(NetcadTools)\Netcad.Interop.Topology.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Netcad.Runtime"><HintPath>$(NetcadTools)\Netcad.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Netcad.Epsg"><HintPath>$(NetcadTools)\Netcad.Epsg.dll</HintPath><Private>false</Private></Reference>
+    <!-- Excel okuma: NETCAD'in kendi ClosedXML kopyası (0.94), sürüm çakışması olmasın -->
+    <Reference Include="ClosedXML"><HintPath>$(NetcadTools)\ClosedXML.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="DocumentFormat.OpenXml"><HintPath>$(NetcadTools)\DocumentFormat.OpenXml.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KulAI.Core\KulAI.Core.csproj" />
+    <ProjectReference Include="..\KulAI.Claude\KulAI.Claude.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="KulAI_TRK.NCRIB" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="KulAI_ENU.NCRIB" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="png\*.png" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

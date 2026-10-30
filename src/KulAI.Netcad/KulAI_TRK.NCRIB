@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="windows-1254"?>
+<NCXML NCOwner="Netcad Ribbon" Version="1">
+  <NCData>
+    <Items>
+      <Item>
+        <SimpleName>Kul AI Asistan</SimpleName>
+        <Exp />
+        <Hint>Kul AI Asistan: yapay zeka asistanını açar</Hint>
+        <Category>Kul AI/Asistan</Category>
+        <Shortcut />
+        <Tag>KulAI</Tag>
+        <Ribbon_IconType>BY</Ribbon_IconType>
+        <ImageFileName>[#NETCAD_DIRECTORY]\MODUL\KulAI\png\\kulai_32px.png</ImageFileName>
+        <PresetValues />
+        <Ribbon_Target>R</Ribbon_Target>
+        <Ribbon_IconPos />
+        <Ribbon_IconGroup />
+        <Ribbon_IconSection>0</Ribbon_IconSection>
+        <Ribbon_Distributed>0</Ribbon_Distributed>
+        <SubMenu>KulAI%1</SubMenu>
+        <Custom_Command />
+        <Short_Module_Name>KulAI</Short_Module_Name>
+        <HelpId>0</HelpId>
+        <Priority>1200</Priority>
+        <Status>0</Status>
+        <CommandId>1</CommandId>
+        <Attrib>0</Attrib>
+        <Value>0</Value>
+      </Item>
+    </Items>
+  </NCData>
+</NCXML>

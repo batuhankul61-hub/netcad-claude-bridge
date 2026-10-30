@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    CAD programından bağımsız çekirdek: model sağlayıcıları (Gemini, Ollama, OpenAI uyumlu; Claude ayrı DLL'de),
+    ajan döngüsü, ayarlar, konuşma kayıtları ve sohbet arayüzü (WPF). Ürün kendi araç setini IToolHost ile verir.
+  -->
+  <PropertyGroup>
+    <AssemblyName>KulAI.Core</AssemblyName>
+    <RootNamespace>KulAI.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Windows'un yerleşik PDF motoru (Windows.Data.Pdf) için WinRT tanımları; ek DLL dağıtılmaz. -->
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.2" />
+  </ItemGroup>
+</Project>

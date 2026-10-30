@@ -1,0 +1,16 @@
+# Araç testleri: yeni boş "KulAI-Test" projesinde çalışır (geliştirici kanalı gerçek projelerde çizimi reddeder).
+diag
+newproject
+tool create_layer {"name":"KUL_BINA","color":"kırmızı"}
+tool create_polyline {"points":[[100,100],[130,100],[130,120],[100,120]],"closed":true,"name":"BINA-1","layer":"KUL_BINA"}
+tool create_points {"points":[{"x":90,"y":90,"z":101.25,"name":"P1","code":"OCAK"},{"x":140,"y":90,"z":100.8,"name":"P2","code":"OCAK"}],"layer":"KUL_NOKTA"}
+tool create_text {"position":[115,110],"text":"Bina 600 m²","height":2,"layer":"KUL_BINA"}
+tool create_circle {"center":[160,110],"radius":5,"layer":"KUL_BINA"}
+tool create_line {"start":[0,0],"end":[100,0],"layer":"KUL_YON_X"}
+tool create_line {"start":[0,0],"end":[0,50],"layer":"KUL_YON_Y"}
+tool list_layers {}
+tool set_layers_visibility {"layers":["*"],"visible":false,"except":["0"]}
+tool list_layers {}
+tool set_layers_visibility {"layers":["*"],"visible":true}
+tool get_drawing_info {}
+tool zoom_extents {}

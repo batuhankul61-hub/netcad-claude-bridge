@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "netcad": {
+      "command": "uv",
+      "args": ["run", "--quiet", "--script", "F:\Projeler\NetcadAI\mcp\netcad_mcp.py"],
+      "env": {
+        "NETCAD_MCP_TIMEOUT": "180"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Derleme çıktıları
+bin/
+obj/
+dist/
+*.user
+.vs/
+
+# Yerel geliştirme / çalışma artıkları
+dev-inbox/
+tests/eval-sonuclari/
+son-degisen.txt
+kurulum-cikti.txt
+modul-klasor.txt
+.claude/settings.local.json

@@ -1,0 +1,11 @@
+# Cephe yazma (write_edge_lengths) ve NETCAD komutunu başlatma (run_netcad_command), deneme projesinde.
+newproject
+tool create_polyline {"points":[[452300.12,4512800.50],[452341.80,4512806.10],[452338.40,4512851.95],[452296.05,4512843.20]],"closed":true,"name":"101","layer":"PARSEL"}
+tool create_polyline {"points":[[452360,4512810],[452372,4512810],[452372,4512822],[452366,4512828],[452360,4512822]],"closed":true,"name":"BINA","layer":"BINA"}
+tool create_polyline {"points":[[452300,4512870],[452330,4512880],[452360,4512870]],"closed":false,"layer":"YOL"}
+tool write_edge_lengths {"layer":"*"}
+tool find_objects {"layer":"CEPHE","types":["text"],"limit":3}
+tool zoom_extents {}
+tool capture_view {}
+tool run_netcad_command {"command":"Cephe Yaz"}
+diag

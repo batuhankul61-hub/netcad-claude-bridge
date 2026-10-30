@@ -1,0 +1,32 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+5 0 obj
+<< /Length 529 >>
+stream
+BT /F1 13 Tf 1 0 0 1 60 780 Tm (KOORDINAT LISTESI - ITRF96 / TM30) Tj 1 0 0 1 60 756 Tm (Ada 101 Parsel 5 - Aplikasyon Noktalari) Tj 1 0 0 1 60 732 Tm () Tj 1 0 0 1 60 708 Tm (Nokta      Y \(saga\)        X \(yukari\)) Tj 1 0 0 1 60 684 Tm (K1        452300.12      4512800.50) Tj 1 0 0 1 60 660 Tm (K2        452341.80      4512806.10) Tj 1 0 0 1 60 636 Tm (K3        452338.40      4512851.95) Tj 1 0 0 1 60 612 Tm (K4        452296.05      4512843.20) Tj 1 0 0 1 60 588 Tm () Tj 1 0 0 1 60 564 Tm (Yuzolcumu: 1887.01 m2) Tj ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000309 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+889
+%%EOF
