@@ -1,6 +1,7 @@
 ﻿# Test (beta) paketi üretir: dist\KulAI-Netcad-Beta-<sürüm>.zip
 #   KulAI\                             NETCAD modülü (NETCAD\MODUL\KulAI altına kurulur)
 #   Kur.bat / Kaldir.bat / kurulum.ps1 çift tıklamayla kurulum/kaldırma
+#   Claude-Bagla.bat, mcp\             modül + Claude Code MCP köprüsü (%APPDATA%\KulAI.Netcad\mcp altına kurulur)
 #   KURULUM VE TEST REHBERI.txt        test edenler için Türkçe rehber
 # Kullanım:  powershell -ExecutionPolicy Bypass -File scripts\package.ps1
 $ErrorActionPreference = "Stop"
@@ -33,7 +34,9 @@ Get-ChildItem $bin -Recurse -File |
     }
 if (Test-Path "$stage\KulAI\dev-inbox.txt") { throw "Geliştirici kanalı pakete girmemeli." }
 
-Copy-Item "$PSScriptRoot\beta\Kur.bat", "$PSScriptRoot\beta\Kaldir.bat" $stage
+Copy-Item "$PSScriptRoot\beta\Kur.bat", "$PSScriptRoot\beta\Kaldir.bat", "$PSScriptRoot\beta\Claude-Bagla.bat" $stage
+New-Item -ItemType Directory -Force "$stage\mcp" | Out-Null
+Copy-Item "$root\mcp\netcad_mcp.py", "$root\mcp\schemas.json" "$stage\mcp"
 # PowerShell 5.1 ve Not Defteri Türkçe karakterleri doğru okusun diye BOM'lu UTF-8
 $bom = New-Object Text.UTF8Encoding $true
 foreach ($f in "kurulum.ps1", "KURULUM VE TEST REHBERI.txt") {

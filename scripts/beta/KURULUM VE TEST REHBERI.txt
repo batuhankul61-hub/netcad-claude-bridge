@@ -111,4 +111,18 @@ içine göz atabilirsiniz.
 -----------
 NETCAD'i kapatıp "Kaldir.bat" dosyasına çift tıklayın.
 
+8) CLAUDE CODE İLE KULLANMA (İSTEĞE BAĞLI)
+------------------------------------------
+Claude Code kullanıyorsanız NETCAD'i doğrudan Claude'a da yaptırabilirsiniz.
+Bunun için Kur.bat yerine "Claude-Bagla.bat" dosyasına çift tıklayın. Modülü kurar,
+NETCAD bağlantısını açar ve Claude Code'a "netcad" adıyla ekler. API anahtarı gerekmez.
+
+Gerekenler: Claude Code ve uv (yoksa kurulum winget ile kurmayı önerir).
+Sonra NETCAD'i açıp bir proje açın, Claude Code'u yeniden başlatın ve
+"NETCAD'de hangi katmanlar var?" gibi bir şey sorun.
+
+Claude her işlemden önce onayınızı ister; her çizim işlemi NETCAD'de Ctrl+Z ile geri alınır.
+Kaldir.bat bu bağlantıyı da kaldırır.
+
+
 Teşekkürler!
