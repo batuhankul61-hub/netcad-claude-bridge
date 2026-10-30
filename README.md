@@ -30,9 +30,9 @@ Güvenlik: N'den fazla nesneyi değiştiren işlemler ve silme onay ister; firma
 
 ## Kurulum
 
-[![Nasıl kurulur? (video, 1:18)](docs/kurulum-videosu.png)](docs/kurulum-videosu.mp4)
+[![Nasıl kurulur? (video, 1:18)](docs/kurulum-videosu.png)](https://github.com/batuhankul61-hub/netcad-claude-bridge/releases/download/v0.4.1/kurulum-videosu.mp4)
 
-*Nasıl kurulur? Görsele tıklayınca 1:18'lik video açılır.*
+*Nasıl kurulur? Görsele tıklayınca 1:18'lik video (3 MB) iner.*
 
 [Releases](https://github.com/batuhankul61-hub/netcad-claude-bridge/releases) sayfasından zip'i indirip bir klasöre çıkartın, NETCAD'i kapatın:
 
