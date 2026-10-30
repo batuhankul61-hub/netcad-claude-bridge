@@ -1,5 +1,5 @@
 # NETCAD .ncn nokta dosyası (sütun vermeden standart sıra) — yalnızca deneme projesine aktarılır.
 newproject
-tool preview_table_file {"path":"C:\\Users\\Batu\\Downloads\\Gumber_bizim_ev.ncn"}
-tool import_points_from_file {"path":"Gumber_bizim_ev.ncn","layer":"NCN"}
-tool find_objects {"layer":"NCN","name_pattern":"merdv*"}
+tool preview_table_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.ncn"}
+tool import_points_from_file {"path":"F:\\Projeler\\NetcadAI\\tests\\data\\olcum.ncn","layer":"NCN"}
+tool find_objects {"layer":"NCN","name_pattern":"P1*"}
