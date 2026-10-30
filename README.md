@@ -28,6 +28,15 @@ Model: Gemini (önerilen; yedek modellere otomatik geçer), Ollama (yerel, ücre
 Panel: Enter gönderir; dosya sürükle-bırak (resim → modele gösterilir, PDF/Excel → yolu mesaja eklenir); Ctrl+V ile panodaki resmi ekleme.
 Güvenlik: N'den fazla nesneyi değiştiren işlemler ve silme onay ister; firma standartları "bunu hatırla" ile kaydedilir.
 
+## Kurulum
+
+[Releases](https://github.com/batuhankul61-hub/netcad-claude-bridge/releases) sayfasından zip'i indirip bir klasöre çıkartın, NETCAD'i kapatın:
+
+- **Kul AI asistanı için:** `Kur.bat`'a çift tıklayın, NETCAD'i açıp panelin Ayarlar'ından Gemini anahtarı girin.
+- **Claude Code bağlantısı için:** `Claude-Bagla.bat`'a çift tıklayın. API anahtarı gerekmez; Claude Code ve uv yeterli.
+
+Kaldırma: `Kaldir.bat`. Ayrıntılar: `scripts/beta/KURULUM VE TEST REHBERI.txt`.
+
 ## Koordinat kuralı
 
 NETCAD API'de x = sağa, y = yukarı. Haritacılıkta **Y = sağa (doğu), X = yukarı (kuzey)**.

@@ -11,6 +11,12 @@ Claude Code ──stdio──► mcp\netcad_mcp.py ──<ad>.cmd/.out──► 
 
 ## Kurulum
 
+**Tek tıkla (paketten):** zip'i çıkartın, NETCAD kapalıyken `Claude-Bagla.bat`'a çift tıklayın. Modülü MCP kanalıyla
+kurar, köprüyü `%APPDATA%\KulAI.Netcad\mcp` altına koyar ve `claude mcp add -s user` ile Claude Code'a ekler.
+`uv` yoksa winget ile kurmayı önerir. Kaldırma: `Kaldir.bat`.
+
+**Kaynak koddan:**
+
 1. NETCAD'i kapatın, modülü MCP kanalıyla kurun:
 
    ```powershell
